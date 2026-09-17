@@ -25,6 +25,14 @@ a one-time sweep of existing artifacts on startup.
 
 `zone-identifier-cleanup.service` runs it as a persistent user service.
 
+## Requirements
+
+- WSL2 (not WSL1)
+- systemd enabled (`systemd=true` in `/etc/wsl.conf`)
+- Debian/Ubuntu-based distro (swap `apt-get` for `dnf`/`zypper` otherwise)
+- `$HOME` on the WSL ext4 disk, not a network share or `/mnt/c`
+- Install separately per distro/machine — nothing syncs
+
 ## Install
 
 ```
