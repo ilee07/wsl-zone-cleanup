@@ -42,6 +42,11 @@ and double-click it. It installs the files, then runs `install.sh` inside
 your default WSL distro for you — you'll be prompted once for your Linux
 sudo password in the console window it opens.
 
+To remove it, use the normal Windows uninstaller (Settings > Apps >
+Installed apps > WSL Zone Cleanup > Uninstall) — it runs `uninstall.sh`
+inside WSL first to stop the service and clean up, then removes the
+Windows-side files.
+
 ### Scripted (from inside WSL)
 
 ```
@@ -69,4 +74,10 @@ sudo loginctl enable-linger "$USER"
 
 ```
 systemctl --user status zone-identifier-cleanup.service
+```
+
+## Uninstall (scripted / manual)
+
+```
+./uninstall.sh
 ```

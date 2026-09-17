@@ -23,6 +23,10 @@ PrivilegesRequired=lowest
 Source: "..\clean-zone-identifier.sh"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\zone-identifier-cleanup.service"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\install.sh"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\uninstall.sh"; DestDir: "{app}"; Flags: ignoreversion
 
 [Run]
 Filename: "{cmd}"; Parameters: "/c {sysnative}\wsl.exe -e bash install.sh || pause"; WorkingDir: "{app}"; Flags: waituntilterminated; StatusMsg: "Installing into WSL (you may be prompted for your Linux sudo password)..."
+
+[UninstallRun]
+Filename: "{cmd}"; Parameters: "/c {sysnative}\wsl.exe -e bash uninstall.sh || pause"; WorkingDir: "{app}"; Flags: waituntilterminated; RunOnceId: "UninstallWslZoneCleanup"
