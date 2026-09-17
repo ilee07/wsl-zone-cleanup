@@ -35,6 +35,21 @@ a one-time sweep of existing artifacts on startup.
 
 ## Install
 
+### Windows installer (no command line)
+
+Download `wsl-zone-cleanup-setup.exe` from the [latest release](https://github.com/ilee07/wsl-zone-cleanup/releases/latest)
+and double-click it. It installs the files, then runs `install.sh` inside
+your default WSL distro for you — you'll be prompted once for your Linux
+sudo password in the console window it opens.
+
+### Scripted (from inside WSL)
+
+```
+./install.sh
+```
+
+### Manual
+
 ```
 sudo apt-get install -y inotify-tools
 
