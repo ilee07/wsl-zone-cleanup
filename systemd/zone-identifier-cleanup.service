@@ -1,0 +1,11 @@
+[Unit]
+Description=Auto-delete Windows Zone.Identifier artifacts under $HOME
+
+[Service]
+Type=simple
+ExecStart=%h/.local/bin/clean-zone-identifier.sh
+Restart=always
+RestartSec=2
+
+[Install]
+WantedBy=default.target
