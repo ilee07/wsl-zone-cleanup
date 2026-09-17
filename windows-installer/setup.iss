@@ -2,6 +2,9 @@
 ; Compile with Inno Setup (ISCC.exe) on Windows to produce wsl-zone-cleanup-setup.exe.
 ; The installer copies the Linux files into {app} on the Windows side, then
 ; shells out to wsl.exe to run install.sh inside the default WSL distro.
+; wsl.exe auto-translates the inherited Windows working directory to the
+; matching /mnt/... path, so install.sh is invoked by relative name rather
+; than hand-converting {app} to a WSL path (which was fragile).
 
 [Setup]
 AppId={{B6E1E9B0-6C2E-4E9A-9E9C-1B7B8B6D9F3D}
@@ -22,16 +25,4 @@ Source: "..\zone-identifier-cleanup.service"; DestDir: "{app}"; Flags: ignorever
 Source: "..\install.sh"; DestDir: "{app}"; Flags: ignoreversion
 
 [Run]
-Filename: "{sys}\wsl.exe"; Parameters: "-e bash ""{code:GetWslInstallPath}"""; Flags: waituntilterminated; StatusMsg: "Installing into WSL (you may be prompted for your Linux sudo password)..."
-
-[Code]
-function GetWslInstallPath(Param: String): String;
-var
-  WinPath, Drive, Rest: String;
-begin
-  WinPath := ExpandConstant('{app}\install.sh');
-  Drive := Lowercase(Copy(WinPath, 1, 1));
-  Rest := Copy(WinPath, 3, Length(WinPath));
-  StringChangeEx(Rest, '\', '/', True);
-  Result := '/mnt/' + Drive + Rest;
-end;
+Filename: "{cmd}"; Parameters: "/c {sysnative}\wsl.exe -e bash install.sh || pause"; WorkingDir: "{app}"; Flags: waituntilterminated; StatusMsg: "Installing into WSL (you may be prompted for your Linux sudo password)..."
